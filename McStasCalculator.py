@@ -1,13 +1,11 @@
 """
-Using some simplified AbstractBase classes for Calculator and Parameter from SimEx
+Using BaseCalculator from libpyvinyl package as base for McStasCalculator
 """
-
-import AbstractBaseClass
-import AbstractBaseCalculator
+from libpyvinyl.BaseCalculator import BaseCalculator, Parameters
 import mcstasscript
 
-class McStasCalculator(AbstractBaseCalculator.AbstractBaseCalculator):
-    def __init__(self, parameters=None, input_path=None, output_path=None):
+class McStasCalculator(BaseCalculator):
+    def __init__(self, parameters=None, dumpfile=None, input_path=None, output_path=None):
         """
         :param parameters : Parameters for McStas run
         :type parameters : McStasParameters
@@ -22,7 +20,8 @@ class McStasCalculator(AbstractBaseCalculator.AbstractBaseCalculator):
         # Overwrites input path with the one used for the McStas instrument
         input_path = parameters.instrument.input_path
 
-        super(McStasCalculator, self).__init__(parameters, input_path, output_path)
+        super(McStasCalculator, self).__init__(parameters=parameters, dumpfile=dumpfile,
+                                               input_path=input_path, output_path=output_path)
 
     def backengine(self):
         instr = self.parameters.instrument
